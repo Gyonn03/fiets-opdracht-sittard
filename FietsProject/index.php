@@ -21,10 +21,10 @@
     <div class="counter">
         <h1>Fiets Teller</h1>
         <form method="post" class="form">
-        <input type="submit" name="plusSubmit" value="Fiets erbij" />
+            <input type="submit" name="plusSubmit" value="Fiets erbij" />
             <br />
             <br />
-            <input type="submit" name="minSubmit" value="Fiets eraf" />    
+            <input type="submit" name="minSubmit" value="Fiets eraf" />
         </form>
         <br />
         <br />
@@ -32,7 +32,7 @@
         <br />
         <br />
     </div>
-
+    
     <?php
     if(isset($_POST["plusSubmit"])) {
         $result = GetData("INSERT INTO tellen (geteldplus, geteldmin)

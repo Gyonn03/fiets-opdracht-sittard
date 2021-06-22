@@ -3,9 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Vragenlijst</title>
-    <link href="assets/stylevragen.css" rel="stylesheet" type="text/css" />
+    <link href="assets/styles.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
-    <script src="myscripts.js"></script>
 	</head>
 	<body>
 		<div class="counter"> 
@@ -40,18 +39,5 @@
         <br />
       </form>
 		</div>
-    <div class="wrapper">
-  <div class="icon facebook">
-    <div class="tooltip">Facebook</div>
-    <span><i class="fab fa-facebook-f"></i></span>
-  </div>
-  <div class="icon twitter">
-    <div class="tooltip">Twitter</div>
-    <span><i class="fab fa-twitter"></i></span>
-  </div>
-  <div class="icon instagram">
-    <div class="tooltip">Instagram</div>
-    <span><i class="fab fa-instagram"></i></span>
-  </div>
 	</body>
 </html>
