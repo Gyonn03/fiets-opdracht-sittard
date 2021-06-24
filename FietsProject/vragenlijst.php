@@ -3,13 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Vragenlijst</title>
-    <link href="assets/styles.css" rel="stylesheet" type="text/css" />
+    <link href="assets/style_tijdelijk.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
-	</head>
+    <script src="script/myscripts.js"></script>
+  </head>
 	<body>
 		<div class="counter"> 
-			<h1>Vragen</h1>
 			<form action="verwerkt.php" method="post" id="quiz" class="form">
+      <h1>Vragen</h1>
         <!-- Vraag 1 -->
 			  <h2>Waar woon je?</h2>	
         <?php
@@ -21,7 +22,6 @@
             echo "</div>";
           }
         ?>
-        
         <!-- Vraag 2 -->
         <h2>Waarom ben je vandaag in de stad?</h2>
         <?php
@@ -34,10 +34,27 @@
           }
         ?>
         <br />
-        <input onclick="window.location.href = 'index.php';" type="submit" name="vragenlijstSubmit" value="Verstuur" />
+        <div class="container">
+        <button onclick="window.location.href = 'index.php';" type="submit" name="vragenlijstSubmit" value="Verstuur"></button>
         <br />
         <br />
       </form>
 		</div>
+    
+    <center>
+    <div class="wrapper">
+  <div class="icon facebook">
+    <div class="tooltip">Facebook</div>
+    <span><i class="fab fa-facebook-f"></i></span>
+  </div>
+  <div class="icon twitter">
+    <div class="tooltip">Twitter</div>
+    <span><i class="fab fa-twitter"></i></span>
+  </div>
+  <div class="icon instagram">
+    <div class="tooltip">Instagram</div>
+    <span><i class="fab fa-instagram"></i></span>
+  </div>
+        </center>
 	</body>
 </html>
