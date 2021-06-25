@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Vragenlijst</title>
-    <link href="assets/style_tijdelijk.css" rel="stylesheet" type="text/css" />
+    <link href="assets/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
-    <script src="script/myscripts.js"></script>
-  </head>
+    <script src="js/myscripts.js"></script>
+	</head>
 	<body>
 		<div class="counter"> 
 			<form action="verwerkt.php" method="post" id="quiz" class="form">
@@ -34,13 +34,19 @@
           }
         ?>
         <br />
+        <br />
+        <br />
+        <!-- <input type="submit" name="vragenlijstSubmit" value="Verstuur" /> -->
         <div class="container">
-        <button onclick="window.location.href = 'index.php';" type="submit" name="vragenlijstSubmit" value="Verstuur"></button>
+          <button onclick="window.location.href = 'index.php';" type="submit" name="vragenlijstSubmit" value="Verstuur"></button>
+        </div>
+        <br />
+        <br />
+        <a href="index.php">Terug</a>
         <br />
         <br />
       </form>
 		</div>
-    
     <center>
     <div class="wrapper">
   <div class="icon facebook">
