@@ -100,8 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link ref="stylesheet" href="assets/styles.css" />
+    <title>Fiets Parkeerplaats</title>
+    <link ref="stylesheet" href="assets/style.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
     <style>
@@ -114,7 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="wrapper">
         <h2>Login</h2>
-        <p>Please fill in your credentials to login.</p>
 
         <?php 
         if (!empty($login_err)) {
@@ -124,20 +123,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label>Username</label>
+                <label>Gebruikersnaam</label>
                 <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>    
             <div class="form-group">
-                <label>Password</label>
+                <label>Wachtwoord</label>
                 <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Login">
+                <input type="submit" class="btn btn-secondary" value="Login">
             </div>
             <!-- <p>Don't have an account? <a href="register.php">Sign up now</a>.</p> -->
-            <p>Ga naar de <a href="../vragenlijst.php">vragenlijst</a>.</p>
+            <a href="../vragenlijst.php"class="btn btn-primary">vragenlijst</a>
         </form>
     </div>
 </body>
