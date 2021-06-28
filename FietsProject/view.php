@@ -14,12 +14,15 @@
     <?php
     include("functions.php");
     ?>
+    <!-- Klein menu voor alle knoppen -->
     <form method="post">
         <input type="submit" name="SubmitFilterFietsen" value="Filter fietsen" />
         <input type="submit" name="SubmitFilterVragen" value="Filter vragen" />
+        <input type="submit" name="SubmitHoeveelFietsen" value="Hoeveel fietsen zjn er" />
     </form>
 
     <?php
+    // Form voor de fietsen filter
     if (isset($_POST["SubmitFilterFietsen"])) {
         ?>
         <form method="post">
@@ -31,6 +34,7 @@
         <?php
     }
 
+    // Form voor de vragen filter
     if (isset($_POST["SubmitFilterVragen"])) {
         ?>
         <form method="post">
@@ -42,6 +46,32 @@
         <?php
     }
 
+    // Deze laat zien hoeveel van elk in de database zit
+    if (isset($_POST["SubmitHoeveelFietsen"])) {
+        $result = GetData('SELECT COUNT(id), geteldplus FROM tellen GROUP BY geteldplus;');
+        if ($result->num_rows > 0) {
+            echo "<table>";
+            echo "<tr><th>id</th><th>tellen</th></tr>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["COUNT(id)"] . " </td>";
+                echo "<td>" . $row["geteldplus"] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "0 results";
+        }
+        // Reken uit hoeveel fietsen er in totaal nu zijn
+        $result1 = GetData("SELECT COUNT(id) AS plus FROM tellen WHERE geteldplus = 1;");
+        $result2 = GetData("SELECT COUNT(id) AS min FROM tellen WHERE geteldplus = 0;");
+        $row1 = $result1->fetch_array();
+        $row2 = $result2->fetch_array();
+        $totaal = $row1["plus"] - $row2["min"];
+        echo "Er zijn nu " . $totaal . " fietsen in de parkeerplaats.";
+    }
+
+    // Deze filtert alle fietsen
     if (isset($_POST["SubmitFietsenFilter"])) {
         $eerstedatum = $_POST["Firstdate"];
         $tweededatum = $_POST["Seconddate"];
@@ -64,6 +94,7 @@
         }
     }
 
+    // Deze filtert alle vragen
     if (isset($_POST["SubmitVragenFilter"])) {
         $eerstedatum = $_POST["Firstdate"];
         $tweededatum = $_POST["Seconddate"];
@@ -86,6 +117,7 @@
         }
     }
     ?>
+    <br />
     <a href="index.php">Terug</a>
     </body>
 </html>
