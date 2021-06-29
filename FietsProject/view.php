@@ -18,7 +18,8 @@
     <form method="post">
         <input type="submit" name="SubmitFilterFietsen" value="Filter fietsen" />
         <input type="submit" name="SubmitFilterVragen" value="Filter vragen" />
-        <input type="submit" name="SubmitHoeveelFietsen" value="Hoeveel fietsen zjn er" />
+        <input type="submit" name="SubmitHoeveelFietsen" value="Hoeveel fietsen zijn er?" />
+        <input type="submit" name="SubmitHoeveelVragen" value="Hoeveel vragen zijn er?" />
     </form>
 
     <?php
@@ -51,7 +52,7 @@
         $result = GetData('SELECT COUNT(id), geteldplus FROM tellen GROUP BY geteldplus;');
         if ($result->num_rows > 0) {
             echo "<table>";
-            echo "<tr><th>id</th><th>tellen</th></tr>";
+            echo "<tr><th>Hoeveel</th><th>Tellen</th></tr>";
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row["COUNT(id)"] . " </td>";
@@ -69,6 +70,58 @@
         $row2 = $result2->fetch_array();
         $totaal = $row1["plus"] - $row2["min"];
         echo "Er zijn nu " . $totaal . " fietsen in de parkeerplaats.";
+    }
+
+    if (isset($_POST["SubmitHoeveelVragen"])) {
+        ?>
+        <form method="post">
+            <br />
+            <label for="select-een">Waar woon je? </label>
+            <select name="select-een" id="select-een">
+                <?php
+                $result1 = GetData('SELECT antwoord_een FROM vraag_een');
+                if ($result1->num_rows > 0) {
+                    while($row = $result1->fetch_assoc()) {
+                        echo "<option value='" . $row["antwoord_een"] . "'>" . $row["antwoord_een"] . "</option>";
+                    }
+                }
+                ?>
+            </select>
+            
+            <br />
+            <br />
+            <label for="select-twee">Waarom ben je vandaag in de stad? </label>
+            <select name="select-twee" id="select-twee">
+                <?php
+                $result2 = GetData('SELECT antwoord_twee FROM vraag_twee');
+                if ($result2->num_rows > 0) {
+                    while($row = $result2->fetch_assoc()) {
+                        echo "<option value='" . $row["antwoord_twee"] . "'>" . $row["antwoord_twee"] . "</option>";
+                    }
+                }
+                ?>
+            </select><br /><br />
+            <input type="submit" name="SubmitVragenTeller" value="Verzenden" />
+        </form>
+        <?php
+    }
+
+    if (isset($_POST["SubmitVragenTeller"])) {
+        $result = GetData("SELECT antwoord_een, antwoord_twee, datum FROM vragenlijst WHERE antwoord_een ='" . $_POST["select-een"] . "' AND antwoord_twee ='" . $_POST["select-twee"] . "';");
+        if ($result->num_rows > 0) {
+            echo "<table>";
+            echo "<tr><th>Waar woon je?</th><th>Waarom ben je vandaag in de stad?</th><th>datum</th></tr>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["antwoord_een"] . "</td>";
+                echo "<td>" . $row["antwoord_twee"] . "</td>";
+                echo "<td>" . $row["datum"] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "0 results";
+        }
     }
 
     // Deze filtert alle fietsen
@@ -98,15 +151,15 @@
     if (isset($_POST["SubmitVragenFilter"])) {
         $eerstedatum = $_POST["Firstdate"];
         $tweededatum = $_POST["Seconddate"];
-        $result = GetData("SELECT vraag_een, vraag_twee, datum FROM vragenlijst WHERE datum BETWEEN '" . $eerstedatum . "' AND '" . $tweededatum . "';");
+        $result = GetData("SELECT antwoord_een, antwoord_twee, datum FROM vragenlijst WHERE datum BETWEEN '" . $eerstedatum . "' AND '" . $tweededatum . "';");
         if ($result->num_rows > 0) {
             echo "<table>";
             echo "<tr><th>Waar woon je?</th><th>Waarom ben je vandaag in de stad?</th><th>Datum</th></tr>";
             while ($row = $result->fetch_assoc()) {
                 echo "<form method='post'>";
                 echo "<tr>";
-                echo "<td>" . $row["vraag_een"] . "</td>";
-                echo "<td>" . $row["vraag_twee"] . "</td>";
+                echo "<td>" . $row["antwoord_een"] . "</td>";
+                echo "<td>" . $row["antwoord_twee"] . "</td>";
                 echo "<td>" . $row["datum"] . "</td>";
                 echo "</tr>";
                 echo "</form>";
