@@ -1,114 +1,24 @@
-<?php
-// Initialize the session
-session_start();
- 
-// Check if the user is already logged in, if yes then redirect him to welcome page
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    header("location: ../index.php");
-    exit;
-}
- 
-// Include config file
-require_once "connection.php";
- 
-// Define variables and initialize with empty values
-$username = "";
-$password = "";
-$username_err = "";
-$password_err = "";
-$login_err = "";
- 
-// Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
- 
-    // Check if username is empty
-    if (empty(trim($_POST["username"]))) {
-        $username_err = "Please enter username.";
-    } 
-    else {
-        $username = trim($_POST["username"]);
-    }
-    
-    // Check if password is empty
-    if (empty(trim($_POST["password"]))) {
-        $password_err = "Please enter your password.";
-    } 
-    else {
-        $password = trim($_POST["password"]);
-    }
-    
-    // Validate credentials
-    if (empty($username_err) && empty($password_err)) {
-        // Prepare a select statement
-        $sql = "SELECT id, username, password FROM users WHERE username = ?";
-        
-        if ($statement = $conn->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
-            $statement->bind_param("s", $param_username);
-            
-            // Set parameters
-            $param_username = $username;
-            
-            // Attempt to execute the prepared statement
-            if ($statement->execute()) {
-                // Store result
-                $statement->store_result();
-                
-                // Check if username exists, if yes then verify password
-                if ($statement->num_rows == 1) {                    
-                    // Bind result variables
-                    $statement->bind_result($id, $username, $hashed_password);
-                    if ($statement->fetch()) {
-                        if (password_verify($password, $hashed_password)) {
-                            // Password is correct, so start a new session
-                            session_start();
-                            
-                            // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;                            
-                            
-                            // Redirect user to welcome page
-                            header("location: ../index.php");
-                        } 
-                        else {
-                            // Password is not valid, display a generic error message
-                            $login_err = "Invalid username or password.";
-                        }
-                    }
-                } 
-                else {
-                    // Username doesn't exist, display a generic error message
-                    $login_err = "Invalid username or password.";
-                }
-            } 
-            else {
-                echo "Oops! Something went wrong. Please try again later.";
-            }
 
-            // Close statement
-            $statement->close();
-        }
-    }
-    
-    // Close connection
-    $conn->close();
-}
-?>
  
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link ref="stylesheet" href="assets/styles.css" />
+    <link ref="stylesheet" href=" assets/styles.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <style>
         body{ font: 14px sans-serif; 
         	background: linear-gradient(to right, #ff8ab3 7% ,#0066eb 100% );
+            width: 350px;
+            
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+            margin: 90px auto; 
         }
-        .wrapper{ width: 360px; padding: 20px; }
+        .wrapper{ width: 360px; padding: 20px;background-color:white; }
+        
     </style>
 </head>
 <body>
